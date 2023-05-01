@@ -31,21 +31,22 @@ class Hamburger {
     }
 
     constructor(size, stuffing) {
-        this.amount = size.price + stuffing.price;
-        this.totalCalories = size.calories + stuffing.calories;
+        this.size = size;
+        this.stuffing = stuffing;
+        this.toppings = [];
     }
 
     addTopping(topping) {
-        this.amount += topping.price;
-        this.totalCalories += topping.calories;
+        this.toppings.push(topping);
+        return this.toppings;
     }
 
     calculate() {
-        return this.totalCalories;
+        return this.size.calories + this.stuffing.calories + this.toppings.reduce((sum, topping) => sum + topping.calories, 0);
     }
 
     calculatePrice() {
-        return this.amount;
+        return this.size.price + this.stuffing.price + this.toppings.reduce((sum, topping) => sum + topping.price, 0);
     }
 }
 
@@ -61,16 +62,16 @@ hamburgerBig.addTopping(Hamburger.TOPPING_MAYO);
 
 
 // запитаємо скільки там калорій
-console.log("Small hamburger (cheese) calories: " + hamburgerSmall.calculate () + " kcal");
-console.log("Big hamburger (salad) calories: " + hamburgerBig.calculate () + " kcal");
+console.log("Small hamburger (cheese) calories: " + hamburgerSmall.calculate() + " kcal");
+console.log("Big hamburger (salad) calories: " + hamburgerBig.calculate() + " kcal");
 
 // скільки коштує
 console.log("Small hamburger price: " + hamburgerSmall.calculatePrice() + " ₴");
 console.log("Big hamburger price: " + hamburgerBig.calculatePrice() + " ₴");
 
 // я тут передумав і вирішив додати ще приправу
-hamburgerSmall.addTopping(Hamburger .TOPPING_SAUCE);
-hamburgerBig.addTopping(Hamburger .TOPPING_SAUCE);
+hamburgerSmall.addTopping(Hamburger.TOPPING_SAUCE);
+hamburgerBig.addTopping(Hamburger.TOPPING_SAUCE);
 
 // А скільки тепер коштує?
 console.log("Small hamburger price with sauce: " + hamburgerSmall.calculatePrice()+ " ₴");
